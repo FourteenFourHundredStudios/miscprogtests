@@ -1,0 +1,21 @@
+
+
+
+object Profile (username, password, bio) is Component {
+
+    layout = {
+        <div>
+            <h1 onClick = { call } > { username } </h1>
+            <div>
+                { bio }
+            </div>
+        </div>
+    }
+
+    func test () {
+        print ("Cool!")
+    }
+
+
+}
+

@@ -1,0 +1,20 @@
+object Profile (username, password, bio) is Component {
+
+    layout = {
+        <div>
+            <h1> { username } </h1>
+            <div>
+                { bio }
+            </div>
+        </div>
+    }
+
+    func test () {
+        injections = layout.getInjections()
+        injections.swap("username", username)
+        injections.swap("bio", bio)
+        return layout.render()
+    }
+
+
+}
