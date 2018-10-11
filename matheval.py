@@ -50,13 +50,21 @@ def get_symbols(string):
 				if negative:
 					part = "-"+part
 					negative = False
-				symbols.append(int(part))
+				if part.isdigit():
+					symbols.append(int(part))
+				else:
+					symbols.append(str(part))
 				symbols.append(i)
 				part = ""
 	if negative:
 		part = "-" + part
 		negative = False
-	symbols.append(int(part))
+
+
+	if part.isdigit():
+		symbols.append(int(part))
+	else:
+		symbols.append(str(part))
 	return symbols
 
 
@@ -70,9 +78,13 @@ def solve(tokens, mode=0):
 	for i in range(len(tokens)-1, 0, -1):
 
 		if tokens[i] in ops1 or tokens[i] in ops2:
+
 			leftTokens = []
 			for j in range(0, i):
+				if type(tokens[j]) == str and type(tokens[i]) != str:
+					break
 				leftTokens.append(tokens[j])
+
 
 			if mode == 1:
 				return Expression(solve(leftTokens, 1), tokens[i], solve(rightTokens, 1))
@@ -80,7 +92,11 @@ def solve(tokens, mode=0):
 			if tokens[i] in ops1 and mode == 0:
 				return Expression(solve(leftTokens), tokens[i], solve(rightTokens))
 
+		elif type(tokens[i]) == str:
+				break
+
 		rightTokens.insert(0, tokens[i])
+
 
 	return solve(tokens, 1)
 
@@ -97,9 +113,17 @@ def check(val):
 
 	return a == b
 
-
+"""
 f = "3 + 10 * 2 / 2 * 5 + 2 * 35 + 60 + 100 / 60 + 4 * 5 - 4 + 60 / 3 + 55 * 2 + 50 + 10 * 300 + 44 * 30 - 40"
 print(to_tree(f))
 print(check(f))
 
+"""
 
+f = "3 + 10 * 2 / 5 a"
+
+print(get_symbols(f))
+
+
+print(to_tree(f))
+print(check(f))

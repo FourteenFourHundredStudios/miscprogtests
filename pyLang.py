@@ -91,5 +91,28 @@ class Parse:
 
 		return ast
 
+	def parse2(self):
+		ast = {"type": "empty"}
+		for i in range(len(self.tokens)-1, 0, -1):
+			if self.skipNext:
+				self.skipNext = False
+				continue
+			token = self.tokens[i]
 
-print(Parse(tokens_op).parse())
+			if token["type"] == "number":
+				continue
+
+			token_type = {
+				"keyword": self.keyword,
+				"container": self.func,
+				"number": self.number,
+				"operator": self.op
+			}
+			parsedToken = token_type[token["type"]](i)
+
+			ast = self.branch(ast, parsedToken)
+
+		return ast
+
+
+print(Parse(tokens_easy).parse2())
