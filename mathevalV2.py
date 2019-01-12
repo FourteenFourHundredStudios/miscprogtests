@@ -190,14 +190,9 @@ class Parser():
 
 			token = self.nextToken()
 
-			if token in ops2 and mode == 0:
-				val = Expression(results.pop(), token, self.nextToken(), True)
+			if (token in ops2 and mode == 0) or (token in ops1 and mode == 1):
+				val = Expression(results.pop(), token, self.nextToken(), False)
 				results.append(val)
-
-			elif token in ops1 and mode == 1:
-				val = Expression(results.pop(), token, self.nextToken(), True)
-				results.append(val)
-
 			else:
 				results.append(token)
 
@@ -233,12 +228,24 @@ def check(val):
 
 
 #get_symbols("5 * 2 + 7")
+
+"""
 tokens = [
 	Identifier("system"),
 	Identifier("print"),
 	Container([5,"*",2, "+", 6, "," ,Identifier("hello"), Identifier("world")])
 ]
+"""
 
+"""
+tokens = [
+	5, "+", 5, "*", 2, "-", 3 ,",",Identifier("dqwwq")
+]
+"""
+
+tokens = [
+	5, "+",Identifier("money")
+]
 
 """
 tokens = [
