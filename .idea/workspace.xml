@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c112bfa6-be0a-4a97-ab67-cb03fcfaf486" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/ASTGen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Observer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goto.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mathevalV2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matheval.py" beforeDir="false" afterPath="$PROJECT_DIR$/matheval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mathevalV2.py" beforeDir="false" afterPath="$PROJECT_DIR$/mathevalV2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,8 +16,8 @@
       <file leaf-file-name="mathevalV2.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mathevalV2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="176" column="21" lean-forward="true" selection-start-line="176" selection-start-column="21" selection-end-line="176" selection-end-column="21" />
+            <state relative-caret-position="200">
+              <caret line="238" column="69" selection-start-line="238" selection-start-column="69" selection-end-line="238" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -48,6 +40,9 @@
       <find>solve</find>
       <find>print</find>
       <find>peek</find>
+      <find>Expres</find>
+      <find>&quot;Expres</find>
+      <find>&quot;type&quot;: &quot;Expression&quot;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -247,7 +242,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -609,8 +603,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mathevalV2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="176" column="21" lean-forward="true" selection-start-line="176" selection-start-column="21" selection-end-line="176" selection-end-column="21" />
+        <state relative-caret-position="200">
+          <caret line="238" column="69" selection-start-line="238" selection-start-column="69" selection-end-line="238" selection-end-column="69" />
         </state>
       </provider>
     </entry>

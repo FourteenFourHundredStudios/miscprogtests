@@ -42,6 +42,7 @@ class Expression(object):
 		self.right = right
 		self.op = op
 		self.tree = tree
+		self.type = "Expression"
 
 	def eval(self):
 
@@ -66,13 +67,13 @@ class Expression(object):
 		if not self.tree:
 			return "(" + str(self.left) + " " + str(self.op) + " " + str(self.right) + ")"
 		else:
-			return str({"type": "Expression", "left": self.left, "right":self.right})
+			return str({"type": "Expression", "left": self.left, "op":self.op,"right":self.right})
 
 	def __repr__(self):
 		if not self.tree:
 			return "(" + str(self.left) + " " + str(self.op) + " " + str(self.right) + ")"
 		else:
-			return str({"type": "Expression", "left": self.left, "right": self.right})
+			return str({"type": "Expression", "left": self.left, "op":self.op,"right": self.right})
 
 
 def get_symbols(string):
@@ -129,25 +130,41 @@ class Parser():
 
 	def parse(self):
 		ast = None
+
+		collection = None
+
 		while True:
 			value = ""
 			if not self.moreTokens():
 				break
 			token = self.peekToken()
+
 			if type(token) == int:
-				value = {"type": "Expression", "value": self.parseMath(0)}
+				value = self.parseMath(0)
 			elif type(token) == Identifier:
 				value = self.parseIdentifier()
 			elif type(token) == Container:
 				value = self.parseContainer()
+			elif token in delims:
+				self.nextToken()
+				if collection is None:
+					collection = [ast]
+				else:
+					collection.append(ast)
+				ast = None
+				continue
+
 			if ast is None:
 				ast = value
 			else:
-
 				temp = copy.copy(ast)
 				value["value"] = copy.copy(temp)
 				ast = value
 				self.ast = ast
+
+		if collection is not None:
+			collection.append(ast)
+			return collection
 
 		return ast
 
@@ -168,15 +185,12 @@ class Parser():
 	def parseMath(self, mode):
 		results = []
 		while True:
-			if not self.moreTokens():
+			if not self.moreTokens() or self.peekToken() in delims:
 				break
 
 			token = self.nextToken()
 
-			if token in delims:
-				break
-
-			elif token in ops2 and mode == 0:
+			if token in ops2 and mode == 0:
 				val = Expression(results.pop(), token, self.nextToken(), True)
 				results.append(val)
 
@@ -188,9 +202,9 @@ class Parser():
 				results.append(token)
 
 		if mode == 0:
-			return Parser(results).parseMath(1)[0]
+			return Parser(results).parseMath(1)
 
-		return results
+		return results[0]
 
 	def nextToken(self):
 		return self.tokens.pop(0)
@@ -218,11 +232,20 @@ def check(val):
 #print(check(f))
 
 
+#get_symbols("5 * 2 + 7")
 tokens = [
 	Identifier("system"),
 	Identifier("print"),
-	Container(get_symbols("5 * 2 + 5"))
+	Container([5,"*",2, "+", 6, "," ,Identifier("hello"), Identifier("world")])
 ]
+
+
+"""
+tokens = [
+	5, "+", 3, "*", 2, ",", 3
+]
+"""
+
 
 #print(tokens)
 print(str(Parser(tokens).parse()).replace("'",'"'))
