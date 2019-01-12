@@ -140,7 +140,9 @@ class Parser():
 			token = self.peekToken()
 
 			if type(token) == int:
-				value = self.parseMath(0)
+				#value = self.parseMath(0)
+				value = self.parseMathV2(0)
+
 			elif type(token) == Identifier:
 				value = self.parseIdentifier()
 			elif type(token) == Container:
@@ -171,7 +173,7 @@ class Parser():
 
 	def parseIdentifier(self):
 		name = self.nextToken().value
-		if self.moreTokens() and type(self.peekToken()) is Identifier:
+		if (self.moreTokens() and type(self.peekToken()) is Identifier) or ( self.moreTokens()):
 			return {"type": "Data", "name": name}
 		else:
 			return {"type": "Attribute", "name": name, "value": None}
@@ -182,7 +184,9 @@ class Parser():
 		else:
 			print("SYNTAX ERROR")
 
-	def parseMath(self, mode):
+
+
+	def parseMathV2(self, mode):
 		results = []
 		while True:
 			if not self.moreTokens() or self.peekToken() in delims:
@@ -191,15 +195,23 @@ class Parser():
 			token = self.nextToken()
 
 			if (token in ops2 and mode == 0) or (token in ops1 and mode == 1):
-				val = Expression(results.pop(), token, self.nextToken(), False)
-				results.append(val)
+				left = results.pop()
+				op = token
+				right = self.nextToken()
+				if type(left) is not Expression or int:
+					left = Parser([left]).parse()
+				if type(right) is not Expression or int:
+					right = Parser([right]).parse()
+
+				results.append(Expression(left, op, right, True))
 			else:
 				results.append(token)
 
 		if mode == 0:
-			return Parser(results).parseMath(1)
+			return Parser(results).parseMathV2(1)
 
 		return results[0]
+
 
 	def nextToken(self):
 		return self.tokens.pop(0)
@@ -244,7 +256,7 @@ tokens = [
 """
 
 tokens = [
-	5, "+",Identifier("money")
+	Identifier("money"), Identifier("dqwwq")
 ]
 
 """
