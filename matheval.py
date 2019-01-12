@@ -1,5 +1,6 @@
 ops1 = ["+", "-"]
 ops2 = ["*", "/"]
+delims = [","]
 
 class Expression(object):
 
@@ -41,7 +42,17 @@ def get_symbols(string):
 	for i in string:
 		if i is " ":
 			continue
-		if i not in ops1 and i not in ops2:
+
+		if i in delims:
+
+			if part.isdigit():
+				symbols.append(int(part))
+			else:
+				symbols.append(str(part))
+			part = ""
+			symbols.append(i)
+
+		elif i not in ops1 and i not in ops2 :
 			part += i
 		else:
 			if part == "":
@@ -65,6 +76,7 @@ def get_symbols(string):
 		symbols.append(int(part))
 	else:
 		symbols.append(str(part))
+
 	return symbols
 
 
@@ -77,14 +89,12 @@ def solve(tokens, mode=0):
 
 	for i in range(len(tokens)-1, 0, -1):
 
-		if tokens[i] in ops1 or tokens[i] in ops2:
+		if tokens[i] in ops1 or tokens[i] in ops2 :
 
 			leftTokens = []
 			for j in range(0, i):
-				if type(tokens[j]) == str and type(tokens[i]) != str:
-					break
-				leftTokens.append(tokens[j])
 
+				leftTokens.append(tokens[j])
 
 			if mode == 1:
 				return Expression(solve(leftTokens, 1), tokens[i], solve(rightTokens, 1))
@@ -97,8 +107,9 @@ def solve(tokens, mode=0):
 
 		rightTokens.insert(0, tokens[i])
 
+	if mode == 0:
 
-	return solve(tokens, 1)
+		return solve(tokens, 1)
 
 
 def to_tree(exp):
@@ -113,17 +124,21 @@ def check(val):
 
 	return a == b
 
-"""
-f = "3 + 10 * 2 / 2 * 5 + 2 * 35 + 60 + 100 / 60 + 4 * 5 - 4 + 60 / 3 + 55 * 2 + 50 + 10 * 300 + 44 * 30 - 40"
-print(to_tree(f))
-print(check(f))
 
-"""
-
-f = "3 + 10 * 2 / 5 a"
-
-print(get_symbols(f))
-
+#f = "3 * 10 * 2 / 2 * 5 + 2 * 35 + 60 + 100 / 60 + 4 * 5 - 4 + 60 / 3 + 55 * 2 + 50 + 10 * 300 + 44 * 30 - 40"
+f = "5 + 5 - 6 * 2 + 5 "
+"5 + (5 - (6 * 2) + 5)"
+#print(get_symbols(f))
 
 print(to_tree(f))
-print(check(f))
+#print(check(f))
+
+
+
+#f = "3 + 10 * 2 / 5 a"
+
+#print(get_symbols(f))
+
+
+#print(to_tree(f))
+#print(check(f))
